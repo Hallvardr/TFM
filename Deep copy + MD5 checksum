@@ -1,0 +1,34 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Feb 15 15:48:58 2019
+
+@author: hallvardr
+"""
+
+import copy 
+import sys
+import hashlib
+#import argparse
+
+#def deep_copy():
+    
+    # initializing list 1 
+f = open(sys.argv[1],"r")
+original = f.read()
+original = original.strip()
+     
+    # using deepcopy to deep copy  
+copia = copy.deepcopy(original)
+    
+g = open(sys.argv[2], "w+")
+g.write(copia)
+g.close()
+
+result = hashlib.md5(original)
+checksum = result.hexdigest()
+
+h = open(sys.argv[3], "w+")
+h.write(checksum)
+h.close()
+print(checksum)
