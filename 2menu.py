@@ -893,14 +893,14 @@ menulist= '''
     4. Extract hash from wallet.dat.
     5. Crack wallet hash using hashcat.
     6. MD5 Checksum.
-    9. Quit''' #assuming you want to display menulist, having it as a tuple is useless
+    9. Quit\n''' #assuming you want to display menulist, having it as a tuple is useless
 
 while True:
     
     print(menulist)
-    target=raw_input("Please, pick an item from the menu:\t")
+    option=raw_input("Please, pick an item from the menu:\t")
     
-    if target=="1": 
+    if option=="1": 
         print("Which file would you like to copy?:\nThis action will calculate the MD5 Checksum of the original file\nand perform a bit-to-bit copy of it.")
 
         filename=raw_input("\nEnter name of file to copy: (/home/hallvardr/TFM/image.txt)\n")
@@ -926,15 +926,15 @@ while True:
         
         logging.info('Timeline Duration: '+str(duration)+' seconds')
         
-        cont=raw_input("Continue: Y/N\n")
+        cont=raw_input("Continue: y/n\n")
         if cont == "y":
             system('clear')
             continue
         if cont == "n":
             break
-        else: cont=raw_input("Continue: Y/N\n")
+        else: cont=raw_input("Continue: y/n\n")
 
-    elif target=="2":
+    elif option=="2":
         print()
         
         filename=raw_input("\nWrite the name of the file (ex. image.dd):\n")
@@ -956,15 +956,15 @@ while True:
         
         logging.info('Duration: ' + str(duration) + ' seconds')
         
-        cont=raw_input("Continue: Y/N\n")
+        cont=raw_input("Continue: y/n\n")
         if cont == "y":
             system('clear')
             continue
         if cont == "n":
             break
-        else: cont=raw_input("Continue: Y/N\n")
+        else: cont=raw_input("Continue: y/n\n")
     
-    elif target=="3":
+    elif option=="3":
         
         rootPath=raw_input("\nWrite the root folder path (ex. /root/docs):\n")
 
@@ -980,15 +980,15 @@ while True:
         
         logging.info('Timeline Duration: ' + str(duration)+' seconds') 
         
-        cont=raw_input("Continue: Y/N\n")
+        cont=raw_input("Continue: y/n\n")
         if cont == "y":
             system('clear')
             continue
         if cont == "n":
             break
-        else: cont=raw_input("Continue: Y/N\n")
+        else: cont=raw_input("Continue: y/n\n")
         
-    elif target=="4":
+    elif option=="4":
 
         filename=raw_input("\nEnter name of file to copy: (/home/hallvardr/TFM/image.txt)\n")    
         if read_wallet(json_db, filename, True, True, "", False) == -1:
@@ -1035,47 +1035,76 @@ while True:
         f.close()
         print("File saved in: ", output_hashedwallet)
         
-        cont=raw_input("Continue: Y/N\n")
+        cont=raw_input("Continue: y/n\n")
         if cont == "y":
             system('clear')
             continue
         if cont == "n":
             break
-        else: cont=raw_input("Continue: Y/N\n")
+        else: cont=raw_input("Continue: y/n\n")
         
-    elif target=="5":
+    elif option=="5":
        
-        print("Which file would you like to Checksum?:")
-         
-        cat=raw_input("Which type of attack wopuld you like to execute?\n (1) Bruteforce\n (2) Dicctionary\n (3) Exit\n")
-        if cat == "1":
+        print("Which file would you like to crack?:")
+        
+        paso4=raw_input("\nHave you just performed step 4? y/n\n")
+        
+        if paso4 == "y":
+        
+            cat=raw_input("Which type of attack wopuld you like to execute?\n (1) Bruteforce\n (2) Dicctionary\n (3) Exit\n")
+            if cat == "1":
+                
+                commandline="sudo hashcat -a 3 -m 11300 "+output_hashedwallet+" -O -w 3"
+                os.system(commandline)
+                continue
+                system('clear')
+                continue
             
-            commandline="sudo hashcat -a 3 -m 11300 "+output_hashedwallet+" -O -w 3"
-            os.system(commandline)
-            continue
-            system('clear')
-            continue
-        
-        if cat == "2":
+            elif cat == "2":
+                
+                dicctionary=raw_input("\nSelect dicctionary to use:\n")
+                commandline="sudo hashcat -a 0 -m 11300 "+output_hashedwallet+" "+dicctionary+" -O -w 3"
+                os.system(commandline)
+                continue
             
-            dicctionary=raw_input("\nSelect dicctionary to use:\n")
-            commandline="sudo hashcat -a 0 -m 11300 "+output_hashedwallet+" "+dicctionary+" -O -w 3"
-            os.system(commandline)
+            elif cat == "3":
+                break
+            else: cat=raw_input("Choose a valid option\n")
             continue
         
-        if cat == "3":
-            break
-        else: cat=raw_input("Choose a valid option\n")
-        
-        cont=raw_input("Continue: Y/N\n")
+        if paso4 == "n":
+            
+            hashedwallet=raw_input("\nPlease introduce file with hashed wallet information\n")
+            cat=raw_input("Which type of attack wopuld you like to execute?\n (1) Bruteforce\n (2) Dicctionary\n (3) Exit\n")
+            if cat == "1":
+                
+                commandline="sudo hashcat -a 3 -m 11300 "+hashedwallet+" -O -w 3"
+                os.system(commandline)
+                continue
+                system('clear')
+                continue
+            
+            elif cat == "2":
+                
+                dicctionary=raw_input("\nSelect dicctionary to use:\n")
+                commandline="sudo hashcat -a 0 -m 11300 "+hashedwallet+" "+dicctionary+" -O -w 3"
+                os.system(commandline)
+                continue
+            
+            elif cat == "3":
+                break
+            else: cat=raw_input("Choose a valid option\n")
+            continue
+                            
+        cont=raw_input("Continue: y/n\n")
         if cont == "y":
             system('clear')
             continue
         if cont == "n":
             break
-        else: cont=raw_input("Continue: Y/N\n")
+        else: cont=raw_input("Continue: y/n\n")
         
-    elif target=="6":
+    elif option=="6":
         
         print("Which file would you like to Checksum?:")
         
@@ -1085,17 +1114,29 @@ while True:
         commandline="sudo md5sum "+inputfile+" >"+outputfile+""
         os.system(commandline)
         
-        cont=raw_input("Continue: Y/N\n")
+        cont=raw_input("Continue: y/n\n")
         if cont == "y":
             system('clear')
             continue
         if cont == "n":
             break
-        else: cont=raw_input("Continue: Y/N\n")
+        else: cont=raw_input("Continue: y/n\n")
+    
+    elif option == "7":
+
+        cont=raw_input("Continue: y/n\n")
+        if cont == "y":
+            system('clear')
+            continue
+        elif cont == "n":
+            break
+        else: cont=raw_input("Continue: y/n\n")        
         
-    elif target=="9":
-        print("good bye") #excessive indenting
+    elif option=="9":
+        print("good bye")
+        break#excessive indenting
     
     else: #this replaces the initial while
         #do nothing if the initial input is not 1,2,3,4,5 or 9
-        print(menulist)
+        system('clear')
+        continue
