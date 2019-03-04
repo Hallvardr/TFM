@@ -1121,17 +1121,7 @@ while True:
         if cont == "n":
             break
         else: cont=raw_input("Continue: y/n\n")
-    
-    elif option == "7":
 
-        cont=raw_input("Continue: y/n\n")
-        if cont == "y":
-            system('clear')
-            continue
-        elif cont == "n":
-            break
-        else: cont=raw_input("Continue: y/n\n")        
-        
     elif option=="9":
         print("good bye")
         break#excessive indenting
