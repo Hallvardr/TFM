@@ -24,8 +24,10 @@ import hashlib
 import random
 import math
 import binascii
+import pyfiglet
+import gc
+gc.collect()
 
-#pyw_filename = sys.argv[0].split('/')[len(sys.argv[0].split('/')) - 1]
 pyw_path = os.getcwd()
 
 try:
@@ -886,6 +888,10 @@ class _CSVWriter:
         self.csvFile.close()
 
 system('clear') #Clear screen before to show menu, cls is MS Windows command
+
+Logo = pyfiglet.figlet_format("TFM ALVARO", font = "slant" ) 
+print(Logo) 
+
 menulist= '''
     1. MD5 Checksum + Bit-to-bit copy.
     2. Photorecovery.
@@ -1033,7 +1039,7 @@ while True:
                  cry_salt, cry_rounds, len(ckey), ckey, len(public_key),
                  public_key))
         f.close()
-        print("File saved in: ", output_hashedwallet)
+        print("File saved in: \n", output_hashedwallet)
         
         cont=raw_input("Continue: y/n\n")
         if cont == "y":
@@ -1044,58 +1050,76 @@ while True:
         else: cont=raw_input("Continue: y/n\n")
         
     elif option=="5":
-       
-        print("Which file would you like to crack?:")
         
-        paso4=raw_input("\nHave you just performed step 4? y/n\n")
+        try:
+            output_hashedwallet
         
-        if paso4 == "y":
-        
+        except NameError:
+            
+            hashedwallet=raw_input("\nPlease introduce a file with hashed wallet information\n")
+            os.path.exists(hashedwallet)
+            os.stat(hashedwallet)
+            
             cat=raw_input("Which type of attack wopuld you like to execute?\n (1) Bruteforce\n (2) Dicctionary\n (3) Exit\n")
-            if cat == "1":
-                
-                commandline="sudo hashcat -a 3 -m 11300 "+output_hashedwallet+" -O -w 3"
-                os.system(commandline)
-                continue
-                system('clear')
-                continue
             
-            elif cat == "2":
-                
-                dicctionary=raw_input("\nSelect dicctionary to use:\n")
-                commandline="sudo hashcat -a 0 -m 11300 "+output_hashedwallet+" "+dicctionary+" -O -w 3"
-                os.system(commandline)
-                continue
-            
-            elif cat == "3":
-                break
-            else: cat=raw_input("Choose a valid option\n")
-            continue
-        
-        if paso4 == "n":
-            
-            hashedwallet=raw_input("\nPlease introduce file with hashed wallet information\n")
-            cat=raw_input("Which type of attack wopuld you like to execute?\n (1) Bruteforce\n (2) Dicctionary\n (3) Exit\n")
             if cat == "1":
                 
                 commandline="sudo hashcat -a 3 -m 11300 "+hashedwallet+" -O -w 3"
                 os.system(commandline)
-                continue
-                system('clear')
+                print("\nThe Cracked Password is the following!!!:\n")                
+                commandline1="sudo hashcat -m 11300 "+hashedwallet+" --show"
+                os.system(commandline1)
                 continue
             
             elif cat == "2":
                 
                 dicctionary=raw_input("\nSelect dicctionary to use:\n")
+                os.path.exists(dicctionary)
+                os.stat(dicctionary)
+                
                 commandline="sudo hashcat -a 0 -m 11300 "+hashedwallet+" "+dicctionary+" -O -w 3"
                 os.system(commandline)
+                print("\nThe Cracked Password is the following!!!:\n")
+                commandline1="sudo hashcat -m 11300 "+hashedwallet+" --show"
+                os.system(commandline1)
+                continue
+                    
+            elif cat == "3":
+                break
+            else: cat=raw_input("\nChoose a valid option\n")
+            continue   
+        
+        else:
+            
+            cat=raw_input("Which type of attack wopuld you like to execute?\n (1) Bruteforce\n (2) Dicctionary\n (3) Exit\n")
+            
+            if cat == "1":
+                
+                commandline="sudo hashcat -a 3 -m 11300 "+output_hashedwallet+" -O -w 3"
+                os.system(commandline)
+                print("\nThe Cracked Password is the following!!!:\n")            
+                commandline1="sudo hashcat -m 11300 "+output_hashedwallet+" --show"
+                os.system(commandline1)            
+                continue
+            
+            elif cat == "2":
+                
+                dicctionary=raw_input("\nSelect dicctionary to use:\n")
+                os.path.exists(dicctionary)
+                os.stat(dicctionary)           
+                
+                commandline="sudo hashcat -a 0 -m 11300 "+output_hashedwallet+" "+dicctionary+" -O -w 3"
+                os.system(commandline)
+                print("\nThe Cracked Password is the following!!!:\n")
+                commandline1="sudo hashcat -m 11300 "+output_hashedwallet+" --show"
+                os.system(commandline1)
                 continue
             
             elif cat == "3":
                 break
-            else: cat=raw_input("Choose a valid option\n")
+            else: cat=raw_input("\nChoose a valid option\n")
             continue
-                            
+
         cont=raw_input("Continue: y/n\n")
         if cont == "y":
             system('clear')
@@ -1109,6 +1133,9 @@ while True:
         print("Which file would you like to Checksum?:")
         
         inputfile=raw_input("\nWrite the input file (/home/hallvardr/TFM):\n")
+        os.path.exists(inputfile)
+        os.stat(inputfile)             
+        
         outputfile=raw_input("\nWrite the output file (/home/hallvardr/TFM):\n")
         
         commandline="sudo md5sum "+inputfile+" >"+outputfile+""
@@ -1121,7 +1148,17 @@ while True:
         if cont == "n":
             break
         else: cont=raw_input("Continue: y/n\n")
+    
+    elif option == "7":
 
+        cont=raw_input("Continue: y/n\n")
+        if cont == "y":
+            system('clear')
+            continue
+        elif cont == "n":
+            break
+        else: cont=raw_input("Continue: y/n\n")        
+        
     elif option=="9":
         print("good bye")
         break#excessive indenting
@@ -1129,4 +1166,6 @@ while True:
     else: #this replaces the initial while
         #do nothing if the initial input is not 1,2,3,4,5 or 9
         system('clear')
+        Logo = pyfiglet.figlet_format("TFM ALVARO", font = "slant" ) 
+        print(Logo)        
         continue
