@@ -996,7 +996,7 @@ while True:
         
     elif option=="4":
 
-        filename=raw_input("\nEnter name of file to copy: (/home/hallvardr/TFM/image.txt)\n")    
+        filename=raw_input("\nEnter wallet file destination to extract: (/home/hallvardr/.bitcoin/wallet.dat)\n")    
         if read_wallet(json_db, filename, True, True, "", False) == -1:
             continue
     
