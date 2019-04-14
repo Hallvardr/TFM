@@ -1,0 +1,15 @@
+bitcoind -daemon
+
+bitcoin-cli dumpwallet ~/Documents/TFM/resultados/wallet_dump.txt
+
+bitcoin-cli encryptwallet byebyemaster
+
+bitcoin-cli dumpwallet ~/Documents/TFM/resultados/wallet_dump.txt
+
+bitcoin-cli walletpassphrase byebyemaster 120
+
+bitcoin-cli dumpwallet ~/Documents/TFM/resultados/wallet_dump.txt
+
+bitcoin-cli -datadir=/home/hallvardr/.bitcoin stop
+
+

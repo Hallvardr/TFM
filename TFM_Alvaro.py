@@ -907,26 +907,26 @@ while True:
     option=raw_input("Please, pick an item from the menu:\t")
     
     if option=="1": 
-        print("Which file would you like to copy?:\nThis action will calculate the MD5 Checksum of the original file\nand perform a bit-to-bit copy of it.")
+        print("\nWhich file would you like to copy?:\nThis action will calculate the MD5 Checksum of the original file\nand perform a bit-to-bit copy of it.\n")
 
-        filename=raw_input("\nEnter name of file to copy: (/home/hallvardr/TFM/image.txt)\n")
+        filename=raw_input("\nEnter name of file to copy:\n")
         os.path.exists(filename)
         os.stat(filename)
         
-        destroute=raw_input("\nWrite the destination route (/home/hallvardr/TFM):\n")
-        
+        destroute=raw_input("\nWrite the copy filename and destnantion:\n")
+        destroute1 = destroute+("/copy_image.dd")
         startTime =time.time()
         
+        #Create binary copy.       
+        commandline="sudo dd if="+filename+" of="+destroute1
+        os.system(commandline)
+
         #Create hash original device.
         completeName = os.path.join(destroute, "hashoriginal.txt")
         f = open(completeName,"w+")
-        f.write(md5Checksum(filename))
+        f.write(md5Checksum(destroute1))
         f.close()
-        
-        #Create binary copy.       
-        commandline="sudo dd if="+filename+" of="+destroute+"/copia_image.txt"
-        os.system(commandline)
-        
+               
         endTime =time.time()       
         duration =endTime -startTime
         
@@ -941,20 +941,21 @@ while True:
         else: cont=raw_input("Continue: y/n\n")
 
     elif option=="2":
-        print()
+        print("\nWhich file would you like to Carve deleted files from\n")
         
-        filename=raw_input("\nWrite the name of the file (ex. image.dd):\n")
+        filename=raw_input("\nWrite the name of the file:\n")
         os.path.exists(filename)
         os.stat(filename)
         
-        destroute=raw_input("\nWrite the destination folder route (ex./root/results):\n")
+        destroute=raw_input("\nWrite the destination folder route:\n")
         if not os.path.exists(destroute):
             os.makedirs(destroute)
         
         #RECOVER FILES.
         startTime = time.time()
         
-        commandline=("sudo photorec /debug /log /d "+destroute+" "+filename+"")       
+        #commandline=("sudo photorec /debug /log /d "+destroute+" "+filename+"")    
+        commandline=("photorec /debug /log /d "+destroute+" /cmd "+filename+" partition_none,options,mode_ext2,fileopt,everything,enable,search")
         os.system(commandline);
         
         endTime = time.time() 
@@ -962,19 +963,15 @@ while True:
         
         logging.info('Duration: ' + str(duration) + ' seconds')
         
-        cont=raw_input("Continue: y/n\n")
-        if cont == "y":
-            system('clear')
-            continue
-        if cont == "n":
-            break
-        else: cont=raw_input("Continue: y/n\n")
+        system('clear')
+        continue
     
     elif option=="3":
+        print("\nThis will create a Timeline file\n")
         
-        rootPath=raw_input("\nWrite the root folder path (ex. /root/docs):\n")
+        rootPath=raw_input("\nWrite the input folder path :\n")
 
-        reportPath=raw_input("\nWrite the destinetion path (ex./root/results):\n")
+        reportPath=raw_input("\nWrite the destination path:\n")
         
         startTime = time.time()
         
@@ -995,8 +992,9 @@ while True:
         else: cont=raw_input("Continue: y/n\n")
         
     elif option=="4":
-
-        filename=raw_input("\nEnter wallet file destination to extract: (/home/hallvardr/.bitcoin/wallet.dat)\n")    
+        print("\nThis will convert the private keys into a valid hash format\n")
+        
+        filename=raw_input("\nEnter wallet file destination to extract:\n")    
         if read_wallet(json_db, filename, True, True, "", False) == -1:
             continue
     
