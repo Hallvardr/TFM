@@ -894,10 +894,10 @@ print(Logo)
 
 menulist= '''
     1. MD5 Checksum + Bit-to-bit copy.
-    2. Photorecovery.
+    2. File Carving.
     3. Timeline.
     4. Extract hash from wallet.dat.
-    5. Crack wallet hash using hashcat.
+    5. Crack wallet password.
     6. MD5 Checksum.
     9. Quit\n''' #assuming you want to display menulist, having it as a tuple is useless
 
