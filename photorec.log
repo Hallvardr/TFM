@@ -4,12 +4,6 @@ Using locale 'C.UTF-8'.
 Sun Apr 28 22:59:35 2019
 Command line: PhotoRec /debug /log /d /home/hallvardr/Documents/TFM/TFM/resultaaa /cmd /home/hallvardr/Documents/TFM/TFM/results/copy_image.dd partition_none,options,mode_ext2,fileopt,everything,enable,search
 
-PhotoRec 7.0, Data Recovery Utility, April 2015
-Christophe GRENIER <grenier@cgsecurity.org>
-http://www.cgsecurity.org
-OS: Linux, kernel 4.19.0-kali1-amd64 (#1 SMP Debian 4.19.13-1kali1 (2019-01-03)) x86_64
-Compiler: GCC 8.2
-ext2fs lib: 1.44.5, ntfs lib: libntfs-3g, ewf lib: none, libjpeg: libjpeg-turbo-1.5.2, curses lib: ncurses 6.1
 User is not root!
 Hard disk list
 Disk /home/hallvardr/Documents/TFM/TFM/results/copy_image.dd - 7759 MB / 7400 MiB - CHS 944 255 63 (RO), sector size=512
@@ -2882,7 +2876,7 @@ Sector 1101712
  154732852 drwxr-xr-x     0      0 808454669 21-Sep-2029 08:16 pools.
 0
  231591373 drwxr-xr-x     0      0 3452816845  8-Dec-1945 20:18 :13:54:4.04	
- 258818848 -rwxr-xr-x     0      0 1953528178  7-Sep-2037 14:43 	25c4	บ
+ 258818848 -rwxr-xr-x     0      0 1953528178  7-Sep-2037 14:43 	25c4	ยบ
  24536386 drwxr-xr-x     0      0 538993012 18-Jan-1996 06:49 oNote.D
  87099700 drwxr-xr-x     0      0 3452816840 21-Sep-2029 08:16 .
 0
@@ -2915,7 +2909,8 @@ Sector 1101712
 .00:
  155986245 -rwxr-xr-x     0      0 544434464 15-Feb-2014 10:41 .ent
  168639028 drwxr-xr-x     0      0 943339824 26-Sep-2004 08:01 enabled.on
- 54004024 drwxr-xr-x     0      0 1684956531 17-Sep-2008 03:09 31	25c4	.
+ 54004024 drwxr-xr-x     0      0 1684956531 17-Sep-2008 03:09 31	25c4	.
+
 
  90861893 -r-xr-xr-x     0      0 1935040820 19-Nov-2022 13:09 {"login".:
  188897608 dr-xr-xr-x     0      0 1903839303 19-Mar-2021 11:51 8TaomMZm.ubn
