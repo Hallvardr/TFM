@@ -12,16 +12,4 @@ bitcoin-cli dumpwallet ~/Documents/TFM/resultados/wallet_dump.txt
 
 bitcoin-cli -datadir=/home/hallvardr/.bitcoin stop
 
-sudo mkdir -p /mnt/tmp
 
-fdisk -l /home/hallvardr/Documents/TFM/TFM/results/copy_image.dd
-
-sudo mount -o ro,loop,offset=1048576 /home/hallvardr/Documents/TFM/TFM/results/copy_image.dd /mnt/tmp
-
-sudo mount | grep /home/hallvardr/Documents/TFM/TFM/results/copy_image.dd
-
-cd /mnt/tmp/
-
-cp wallet.dat wallet1.dat /home/hallvardr/Documents/TFM/TFM/results/
-
-sudo umount /mnt/tmp

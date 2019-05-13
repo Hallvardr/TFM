@@ -23,9 +23,11 @@ import string
 import hashlib
 import random
 import math
+import shutil
 import binascii
 import pyfiglet
 import gc
+import errno
 gc.collect()
 
 pyw_path = os.getcwd()
@@ -887,6 +889,16 @@ class _CSVWriter:
     def writerClose(self):
         self.csvFile.close()
 
+def bitcoin_copy(src, dest):
+    try:
+        shutil.copytree(src, dest)
+    except OSError as e:
+        # If the error was caused because the source wasn't a directory
+        if e.errno == errno.ENOTDIR:
+            shutil.copy2(src, dest)
+        else:
+            print('Directory not copied. Error: %s' % e)
+            
 system('clear') #Clear screen before to show menu, cls is MS Windows command
 
 Logo = pyfiglet.figlet_format("TFM ALVARO", font = "slant" ) 
@@ -917,20 +929,34 @@ while True:
         destroute1 = destroute+("/copy_image.dd")
         startTime =time.time()
         
-        #Create binary copy.       
-        commandline="sudo dd if="+filename+" of="+destroute1
-        os.system(commandline)
+        if os.path.isdir(filename):
+            
+            bitcoin_copy(filename, destroute1)
+            
+            commandline=("genisoimage -o "+destroute+"/copy_image.iso "+destroute1+"")
+            os.system(commandline);         
 
-        #Create hash original device.
-        completeName = os.path.join(destroute, "hashoriginal.txt")
-        f = open(completeName,"w+")
-        f.write(md5Checksum(destroute1))
-        f.close()
-               
-        endTime =time.time()       
-        duration =endTime -startTime
-        
-        logging.info('Timeline Duration: '+str(duration)+' seconds')
+            destroute2 = destroute+("/copy_image.iso")
+            completeName = os.path.join(destroute, "bitcoin_hash.txt")
+            f = open(completeName,"w+")
+            f.write(md5Checksum(destroute2))
+            f.close()
+            
+        else:
+            #Create binary copy.       
+            commandline="sudo dd if="+filename+" of="+destroute1
+            os.system(commandline)
+    
+            #Create hash original device.
+            completeName = os.path.join(destroute, "hashoriginal.txt")
+            f = open(completeName,"w+")
+            f.write(md5Checksum(destroute1))
+            f.close()
+                   
+            endTime =time.time()       
+            duration =endTime -startTime
+            
+            logging.info('Timeline Duration: '+str(duration)+' seconds')
         
         cont=raw_input("Continue: y/n\n")
         if cont == "y":
