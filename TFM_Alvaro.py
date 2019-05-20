@@ -1024,8 +1024,6 @@ while True:
         if read_wallet(json_db, filename, True, True, "", False) == -1:
             continue
     
-            # Use btcrecover/btcrpass.py -> "Bitcoin Core" logic in case of problems
-            # with the code in this file.
         minversion = json_db.get("minversion", None)
         if minversion and minversion > max_version:
             sys.stderr.write("WARNING: %s has previously unseen minversion '%s'!\n" %
@@ -1043,7 +1041,7 @@ while True:
             continue
         
         for k in json_db['keys']:
-            pass  # dirty hack but it works!
+            pass
         
         ckey = k['encrypted_privkey']
         public_key = k['pubkey']
